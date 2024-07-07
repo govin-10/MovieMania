@@ -1,10 +1,8 @@
 import React from 'react';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import FeedScreen from '../../screens/Main/FeedScreen';
+import DrawerNavigation from './DrawerNavigation';
 
-const DrawerNav = createDrawerNavigator();
 const AppNavigator = () => {
-  return <FeedScreen />;
+  return <DrawerNavigation />;
 };
 
 export default AppNavigator;

@@ -4,11 +4,8 @@
  *
  * @format
  */
-
 import React from 'react';
-
 import RootNavigator from './src/navigation/RootNavigation/RootNavigator';
-import AuthStack from './src/navigation/AuthStack/AuthStack';
 import {AuthProvider} from './src/context/AuthContext';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 

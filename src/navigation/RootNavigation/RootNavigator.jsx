@@ -1,4 +1,3 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import AuthStack from '../AuthStack/AuthStack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -15,5 +14,3 @@ const RootNavigator = () => {
 };
 
 export default RootNavigator;
-
-const styles = StyleSheet.create({});
