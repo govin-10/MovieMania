@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, FlatList, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import PopularPost from './PopularPost';
@@ -33,7 +40,7 @@ const Popular = ({api}) => {
         />
       ) : (
         <View>
-          <Text>Loading</Text>
+          <ActivityIndicator size={'large'} />
         </View>
       )}
     </View>

@@ -23,5 +23,6 @@ export default MoviePage;
 const styles = StyleSheet.create({
   moviepageContainer: {
     padding: 15,
+    marginBottom: 50,
   },
 });

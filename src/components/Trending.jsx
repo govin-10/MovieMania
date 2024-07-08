@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, FlatList, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import TrendingPost from './TrendingPost';
@@ -23,7 +30,7 @@ const Trending = ({api}) => {
   return (
     <View>
       <Text style={styles.header}>Trending</Text>
-      {movies ? (
+      {movies.length > 0 ? (
         <FlatList
           data={movies}
           renderItem={({item}) => <TrendingPost trendingMovies={item} />}
@@ -34,7 +41,7 @@ const Trending = ({api}) => {
         />
       ) : (
         <View>
-          <Text>Loading</Text>
+          <ActivityIndicator size={'large'} />
         </View>
       )}
     </View>

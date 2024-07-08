@@ -31,9 +31,8 @@ export const _logoutFromGoogle = async () => {
     console.log('singout initated');
     await auth().signOut();
     await GoogleSignin.signOut();
-
     await AsyncStorage.removeItem('user');
-    console.log('singout completed');
+    console.log('signout completed');
   } catch (error) {
     console.log('Error signing out: ', error);
   }
