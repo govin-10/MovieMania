@@ -21,7 +21,11 @@ const PopularPost = ({popularMovies}) => {
         <View style={layer}></View>
       </ImageBackground>
       <View style={movieInfo}>
-        <Text style={movieTitle}>{popularMovies.title}</Text>
+        {popularMovies.title ? (
+          <Text style={movieTitle}>{popularMovies.title}</Text>
+        ) : (
+          <Text style={movieTitle}>{popularMovies.name}</Text>
+        )}
       </View>
     </View>
   );

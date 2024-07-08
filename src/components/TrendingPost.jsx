@@ -20,7 +20,11 @@ const TrendingPost = ({trendingMovies}) => {
         <View style={layer}></View>
       </ImageBackground>
       <View style={movieInfo}>
-        <Text style={movieTitle}>{trendingMovies.title}</Text>
+        {trendingMovies.title ? (
+          <Text style={movieTitle}>{trendingMovies.title}</Text>
+        ) : (
+          <Text style={movieTitle}>{trendingMovies.name}</Text>
+        )}
       </View>
     </View>
   );

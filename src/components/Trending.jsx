@@ -31,14 +31,16 @@ const Trending = ({api}) => {
     <View>
       <Text style={styles.header}>Trending</Text>
       {movies.length > 0 ? (
-        <FlatList
-          data={movies}
-          renderItem={({item}) => <TrendingPost trendingMovies={item} />}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          style={styles.flatList}
-        />
+        <View>
+          <FlatList
+            data={movies}
+            renderItem={({item}) => <TrendingPost trendingMovies={item} />}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            style={styles.flatList}
+          />
+        </View>
       ) : (
         <View>
           <ActivityIndicator size={'large'} />

@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createContext, useContext, useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
+import {ActivityIndicator} from 'react-native';
 
 const AuthContext = createContext();
 
@@ -13,7 +14,7 @@ export const AuthProvider = ({children}) => {
       try {
         const storedUser = await AsyncStorage.getItem('user');
         if (storedUser) {
-          setUser(JSON.parse(storedUser));
+          setUser(JSON.stringify(storedUser));
         }
       } catch (error) {
         console.log(error);
@@ -38,11 +39,11 @@ export const AuthProvider = ({children}) => {
   }, []);
 
   if (loading) {
-    return null; // Or some loading spinner
+    return <ActivityIndicator />; // Or some loading spinner
   }
 
   return (
-    <AuthContext.Provider value={{user, setUser, loading}}>
+    <AuthContext.Provider value={{user, setUser}}>
       {children}
     </AuthContext.Provider>
   );

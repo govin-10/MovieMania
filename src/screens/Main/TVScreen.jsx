@@ -1,13 +1,14 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import PageLayout from '../../components/PageLayout';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import TVPage from '../../pages/TVPage';
 
 const TVScreen = () => {
   return (
-    <SafeAreaView style={styles.TVContainer}>
-      <PageLayout />
-    </SafeAreaView>
+    <ScrollView style={styles.TVContainer}>
+      <PageLayout children={<TVPage />} />
+    </ScrollView>
   );
 };
 

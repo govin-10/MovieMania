@@ -1,30 +1,73 @@
 import React, {useEffect, useState} from 'react';
+import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {
-  DrawerContent,
-  DrawerContentScrollView,
-  DrawerItemList,
-} from '@react-navigation/drawer';
-import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {useAuth} from '../context/AuthContext';
-import {userInfo} from 'os';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {_logoutFromGoogle} from '../config/firebase/GoogleSignIn';
 
 const CustomDrawerContent = ({props}) => {
   const {user} = useAuth();
+
+  const handleLogOut = async () => {
+    await _logoutFromGoogle();
+  };
   return (
-    <DrawerContentScrollView {...props} style={styles.drawerContainer}>
+    <DrawerContentScrollView {...props}>
       {user ? (
-        <View>
+        <View style={styles.drawerContainer}>
           <View style={styles.userInfo}>
             <Image source={{uri: user.photoURL}} style={styles.profilePhoto} />
             <Text style={styles.userName}>{user.displayName}</Text>
           </View>
-          <DrawerItemList {...props} />
+
+          <View style={styles.bottomSection}>
+            <View style={styles.drawerMenu}>
+              <DrawerItem
+                {...props}
+                label={'Profile'}
+                icon={() => (
+                  <MaterialIcons
+                    name="account-circle"
+                    size={30}
+                    color="black"
+                  />
+                )}
+                onPress={() => props.navigation.navigate('Profile')}
+                labelStyle={styles.drawerMenuLabel}
+                style={styles.drawerMenuItem}
+              />
+              <DrawerItem
+                label={'Profile'}
+                icon={() => (
+                  <MaterialIcons
+                    name="account-circle"
+                    size={30}
+                    color="black"
+                  />
+                )}
+                labelStyle={styles.drawerMenuLabel}
+                style={styles.drawerMenuItem}
+              />
+            </View>
+            <TouchableOpacity
+              onPress={handleLogOut}
+              style={styles.logoutSection}>
+              <MaterialIcons name="logout" size={25} />
+              <Text style={styles.logoutText}>Logout</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       ) : (
         <ActivityIndicator />
       )}
-      {/* <DrawerContent {...props} /> */}
     </DrawerContentScrollView>
   );
 };
@@ -34,9 +77,10 @@ export default CustomDrawerContent;
 const styles = StyleSheet.create({
   drawerContainer: {
     backgroundColor: 'white',
-    padding: 20,
+    height: Dimensions.get('window').height - 50,
   },
   userInfo: {
+    padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: 'grey',
     paddingBottom: 20,
@@ -52,5 +96,34 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  bottomSection: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  drawerMenu: {
+    marginTop: 20,
+    width: '100%',
+  },
+  drawerMenuLabel: {
+    fontSize: 20,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  drawerMenuItem: {
+    borderBottomColor: 'grey',
+    borderBottomWidth: 1,
+  },
+  logoutSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    padding: 10,
+  },
+  logoutText: {
+    fontSize: 20,
+    marginLeft: 10,
+    fontWeight: 'bold',
+    color: 'black',
   },
 });

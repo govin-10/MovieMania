@@ -32,12 +32,14 @@ const Popular = ({api}) => {
     <View style={styles.popularContainer}>
       <Text style={styles.headerTitle}>Popular</Text>
       {movies.length > 0 ? (
-        <FlatList
-          data={movies}
-          renderItem={({item}) => <PopularPost popularMovies={item} />}
-          style={styles.flatList}
-          numColumns={2}
-        />
+        <View>
+          <FlatList
+            data={movies}
+            renderItem={({item}) => <PopularPost popularMovies={item} />}
+            style={styles.flatList}
+            numColumns={2}
+          />
+        </View>
       ) : (
         <View>
           <ActivityIndicator size={'large'} />
