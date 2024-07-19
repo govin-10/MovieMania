@@ -1,20 +1,21 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createContext, useContext, useEffect, useState} from 'react';
-import auth from '@react-native-firebase/auth';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {ActivityIndicator} from 'react-native';
+import {AuthContextType, AuthProviderProps} from '../types';
 
-const AuthContext = createContext();
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({children}) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
         const storedUser = await AsyncStorage.getItem('user');
         if (storedUser) {
-          setUser(JSON.stringify(storedUser));
+          setUser(JSON.parse(storedUser));
         }
       } catch (error) {
         console.log(error);
@@ -43,10 +44,18 @@ export const AuthProvider = ({children}) => {
   }
 
   return (
-    <AuthContext.Provider value={{user, setUser}}>
+    <AuthContext.Provider value={{user, setUser, loading, setLoading}}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = (): AuthContextType | undefined => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    console.log('No initialized context');
+  }
+
+  return context;
+};

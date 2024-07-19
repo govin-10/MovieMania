@@ -20,6 +20,7 @@ export const _signInWithGoogle = async () => {
 
     const signedInUser = await auth().signInWithCredential(googleCredential);
     await AsyncStorage.setItem('user', JSON.stringify(signedInUser.user));
+
     return signedInUser;
   } catch (error) {
     console.log('Google sign in error: ', error);

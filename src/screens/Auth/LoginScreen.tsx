@@ -5,29 +5,36 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Image,
 } from 'react-native';
+import {_signInWithGoogle} from '../../config/firebase/GoogleSignIn';
 
-const SignupScreen = () => {
+const LoginScreen = () => {
+  const signInWithGoogle = () => {
+    _signInWithGoogle().then(data => {
+      if (!data) {
+        console.log('error in signing');
+        return;
+      }
+      console.log('Sign in with google success');
+      console.log(data);
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>{/* Logo can be placed here */}</View>
-      <Text style={styles.welcomeText}>Create an Account</Text>
-      <TextInput style={styles.input} placeholder="Name" />
+      <Text style={styles.welcomeText}>Welcome Back!</Text>
       <TextInput style={styles.input} placeholder="Email" />
       <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.signupButton}>
-        <Text style={styles.signupButtonText}>SIGN UP</Text>
+      <TouchableOpacity>
+        <Text style={styles.forgotPassword}>Forgot Password?</Text>
       </TouchableOpacity>
-
-      <Text style={styles.footerText}>
-        Already have an account? <Text style={styles.loginText}>Login</Text>
-      </Text>
+      <TouchableOpacity style={styles.loginButton}>
+        <Text style={styles.loginButtonText}>LOGIN</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.loginButton} onPress={signInWithGoogle}>
+        <Text style={styles.loginButtonText}>Sign in with google</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -57,7 +64,12 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 10,
   },
-  signupButton: {
+  forgotPassword: {
+    textAlign: 'right',
+    marginBottom: 30,
+    color: '#007BFF',
+  },
+  loginButton: {
     backgroundColor: '#000',
     height: 40,
     justifyContent: 'center',
@@ -65,30 +77,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 20,
   },
-  signupButtonText: {
+  loginButtonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },
-  socialLoginContainer: {
-    marginBottom: 20,
-    alignItems: 'center',
-  },
-  googleButton: {
-    width: '100%',
-    height: 48,
-    marginBottom: 10,
-  },
-  facebookButton: {
-    width: '100%',
-    height: 48,
-  },
-  footerText: {
-    textAlign: 'center',
-  },
-  loginText: {
-    color: '#007BFF',
-  },
 });
 
-export default SignupScreen;
+export default LoginScreen;
