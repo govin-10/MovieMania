@@ -2,11 +2,16 @@ import React from 'react';
 import {
   View,
   Text,
-  TextInput,
-  TouchableOpacity,
+  ImageBackground,
   StyleSheet,
+  Image,
+  Dimensions,
 } from 'react-native';
 import {_signInWithGoogle} from '../../config/firebase/GoogleSignIn';
+import {images} from '../../constants/ImagePath';
+import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
+
+const {height, width} = Dimensions.get('window');
 
 const LoginScreen = () => {
   const signInWithGoogle = () => {
@@ -22,19 +27,29 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>{/* Logo can be placed here */}</View>
-      <Text style={styles.welcomeText}>Welcome Back!</Text>
-      <TextInput style={styles.input} placeholder="Email" />
-      <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-      <TouchableOpacity>
-        <Text style={styles.forgotPassword}>Forgot Password?</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.loginButton}>
-        <Text style={styles.loginButtonText}>LOGIN</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.loginButton} onPress={signInWithGoogle}>
-        <Text style={styles.loginButtonText}>Sign in with google</Text>
-      </TouchableOpacity>
+      <View style={styles.header}>
+        <Image source={images.LoginHero} style={styles.loginHero} />
+      </View>
+      <View style={styles.heroTextSection}>
+        <Text style={styles.browseText}>Browse</Text>
+        <Text style={styles.defaultText}>your favourite</Text>
+        <Text style={styles.movieText}>MOVIES & SHOWS</Text>
+        <Text style={styles.defaultText}>seamlessly now!</Text>
+      </View>
+
+      <View style={styles.footer}>
+        <GoogleSigninButton
+          color="light"
+          style={styles.loginButton}
+          onPress={signInWithGoogle}
+        />
+        {/* <TouchableOpacity style={styles.loginButton} onPress={signInWithGoogle}>
+          <Text style={styles.loginButtonText}>Continue with google</Text>
+        </TouchableOpacity> */}
+        <ImageBackground
+          source={images.LoginBackground}
+          style={styles.footerImage}></ImageBackground>
+      </View>
     </View>
   );
 };
@@ -43,45 +58,61 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 20,
-    justifyContent: 'center',
+    // justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: height * 0.05,
+    width: width,
+    height: height * 0.35,
   },
-  welcomeText: {
-    fontSize: 24,
+  loginHero: {height: '100%', width: '100%'},
+  heroTextSection: {
+    width: width * 0.6,
+  },
+
+  browseText: {
+    fontSize: 40,
     fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
+    color: 'black',
   },
-  input: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginBottom: 15,
-    paddingHorizontal: 10,
+  defaultText: {
+    color: 'black',
+    fontSize: 30,
   },
-  forgotPassword: {
-    textAlign: 'right',
-    marginBottom: 30,
-    color: '#007BFF',
+  movieText: {
+    color: 'red',
+    fontSize: 30,
   },
   loginButton: {
-    backgroundColor: '#000',
-    height: 40,
-    justifyContent: 'center',
+    width: width * 0.6,
+    height: height * 0.07,
+    position: 'absolute',
+    top: 30,
+    marginVertical: 20,
+    zIndex: 99,
+    // pos,
+  },
+  // loginButtonText: {
+  //   color: '#fff',
+  //   fontSize: 20,
+  //   fontWeight: 'bold',
+  //   padding: 15,
+  // },
+  footer: {
+    flex: 1,
+    width,
+    position: 'relative',
     alignItems: 'center',
-    borderRadius: 5,
-    marginBottom: 20,
   },
-  loginButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+  footerImage: {
+    width: '100%',
+    position: 'absolute',
+    height: '100%',
+    bottom: 0,
   },
+  // footerBackground: {height: height * 0.5, width: '100%', position: 'absolute'},
 });
 
 export default LoginScreen;
