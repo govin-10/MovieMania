@@ -1,5 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
+import {
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+  DrawerItem,
+} from '@react-navigation/drawer';
 import {
   ActivityIndicator,
   Dimensions,
@@ -13,8 +17,10 @@ import {useAuth} from '../context/AuthContext';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {_logoutFromGoogle} from '../config/firebase/GoogleSignIn';
 
-const CustomDrawerContent = ({props}) => {
-  const {user} = useAuth();
+const CustomDrawerContent: React.FC<DrawerContentComponentProps> = props => {
+  const {user} = useAuth() || {};
+
+  console.log(props.navigation);
 
   const handleLogOut = async () => {
     await _logoutFromGoogle();
@@ -24,7 +30,10 @@ const CustomDrawerContent = ({props}) => {
       {user ? (
         <View style={styles.drawerContainer}>
           <View style={styles.userInfo}>
-            <Image source={{uri: user.photoURL}} style={styles.profilePhoto} />
+            <Image
+              source={{uri: user.photoURL || ''}}
+              style={styles.profilePhoto}
+            />
             <Text style={styles.userName}>{user.displayName}</Text>
           </View>
 
@@ -55,6 +64,7 @@ const CustomDrawerContent = ({props}) => {
                 )}
                 labelStyle={styles.drawerMenuLabel}
                 style={styles.drawerMenuItem}
+                onPress={() => 'Profile Pressed'}
               />
             </View>
             <TouchableOpacity

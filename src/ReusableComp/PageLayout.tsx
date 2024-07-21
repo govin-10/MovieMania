@@ -1,15 +1,19 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {useAuth} from '../context/AuthContext';
 import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
 
-const PageLayout = ({children}) => {
+interface PageProps {
+  children: ReactNode;
+}
+
+const PageLayout: React.FC<PageProps> = ({children}) => {
   const navigation = useNavigation();
 
   const {layoutContainer, header, imageBox, image, searchBox} = styles;
 
-  const {user} = useAuth();
+  const {user} = useAuth() || {};
 
   return (
     <View style={layoutContainer}>
@@ -17,7 +21,7 @@ const PageLayout = ({children}) => {
         <TouchableOpacity
           onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
           <View style={imageBox}>
-            <Image source={{uri: user.photoURL}} style={image} />
+            <Image source={{uri: user?.photoURL || ''}} style={image} />
           </View>
         </TouchableOpacity>
         <TextInput style={searchBox} placeholder="Search" />

@@ -1,20 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   ImageBackground,
+  TouchableOpacity,
   StyleSheet,
   Image,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import {_signInWithGoogle} from '../../config/firebase/GoogleSignIn';
 import {images} from '../../constants/ImagePath';
-import {GoogleSigninButton} from '@react-native-google-signin/google-signin';
 
 const {height, width} = Dimensions.get('window');
 
 const LoginScreen = () => {
+  const [signInLoading, setSignInLoading] = useState<boolean>(false);
   const signInWithGoogle = () => {
+    setSignInLoading(true);
     _signInWithGoogle().then(data => {
       if (!data) {
         console.log('error in signing');
@@ -23,6 +26,7 @@ const LoginScreen = () => {
       console.log('Sign in with google success');
       console.log(data);
     });
+    setSignInLoading(false);
   };
 
   return (
@@ -38,14 +42,20 @@ const LoginScreen = () => {
       </View>
 
       <View style={styles.footer}>
-        <GoogleSigninButton
+        {/* <GoogleSigninButton
           color="light"
           style={styles.loginButton}
           onPress={signInWithGoogle}
-        />
-        {/* <TouchableOpacity style={styles.loginButton} onPress={signInWithGoogle}>
-          <Text style={styles.loginButtonText}>Continue with google</Text>
-        </TouchableOpacity> */}
+        /> */}
+        {signInLoading ? (
+          <ActivityIndicator />
+        ) : (
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={signInWithGoogle}>
+            <Text style={styles.loginButtonText}>Continue with google</Text>
+          </TouchableOpacity>
+        )}
         <ImageBackground
           source={images.LoginBackground}
           style={styles.footerImage}></ImageBackground>
@@ -91,15 +101,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 30,
     marginVertical: 20,
-    zIndex: 99,
-    // pos,
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1,
   },
-  // loginButtonText: {
-  //   color: '#fff',
-  //   fontSize: 20,
-  //   fontWeight: 'bold',
-  //   padding: 15,
-  // },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    padding: 15,
+  },
   footer: {
     flex: 1,
     width,

@@ -1,8 +1,8 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {ProfileScreen} from '../../screens/Main';
 import BottomNavigation from './BottomNavigation';
 import CustomDrawerContent from '../../components/CustomDrawerContent';
 import {MainDrawerParamList} from '../../types';
+import {ProfileScreen} from '../../screens/Main';
 
 const DrawerNav = createDrawerNavigator<MainDrawerParamList>();
 

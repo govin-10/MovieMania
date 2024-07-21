@@ -38,6 +38,7 @@ const Popular = ({api}) => {
             renderItem={({item}) => <PopularPost popularMovies={item} />}
             style={styles.flatList}
             numColumns={2}
+            scrollEnabled={false}
           />
         </View>
       ) : (
